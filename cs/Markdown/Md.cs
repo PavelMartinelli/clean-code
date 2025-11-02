@@ -1,10 +1,38 @@
-﻿namespace Markdown;
+﻿using Markdown.Handlers;
+using Markdown.Interfaces;
+using Markdown.Parsers;
+using Markdown.Renders;
 
+namespace Markdown;
+
+// Md.cs
 public class Md
 {
-    public string Render(string markdownText)
+    private static readonly IParser parser;
+    private static readonly IRender renderer;
+    
+    static Md()
     {
-        // Основной метод для преобразования Markdown в HTML
-        throw new NotImplementedException();
+        var handlers = new List<ITokenHandler>
+        {
+            new EscapeHandler(),
+            new HeaderHandler(),
+            new StrongHandler(),
+            new ItalicHandler(),
+            new NewLineHandler(),
+            new TextHandler()
+        };
+        
+        parser = new MarkdownParser(handlers);
+        renderer = new HtmlRenderer(new SyntaxTreeConstructor());
+    }
+    
+    public string Render(string markdown)
+    {
+        if (string.IsNullOrEmpty(markdown))
+            return string.Empty;
+            
+        var tokens = parser.Parse(markdown);
+        return renderer.Render(tokens);
     }
 }
