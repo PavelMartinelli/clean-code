@@ -5,12 +5,11 @@ using Markdown.Renders;
 
 namespace Markdown;
 
-// Md.cs
 public class Md
 {
     private static readonly IParser parser;
     private static readonly IRender renderer;
-    
+
     static Md()
     {
         var handlers = new List<ITokenHandler>
@@ -22,16 +21,16 @@ public class Md
             new NewLineHandler(),
             new TextHandler()
         };
-        
+
         parser = new MarkdownParser(handlers);
         renderer = new HtmlRenderer(new SyntaxTreeConstructor());
     }
-    
+
     public string Render(string markdown)
     {
         if (string.IsNullOrEmpty(markdown))
             return string.Empty;
-            
+
         var tokens = parser.Parse(markdown);
         return renderer.Render(tokens);
     }

@@ -3,7 +3,6 @@ using Markdown.Parsers;
 
 namespace Markdown.Handlers;
 
-// Handlers/HeaderHandler.cs
 public class HeaderHandler : ITokenHandler
 {
     public bool CanHandle(char currentChar, ParserContext context)

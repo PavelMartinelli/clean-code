@@ -3,7 +3,7 @@ using Markdown.Parsers;
 
 namespace Markdown.Handlers;
 
-public class NewLineHandler: ITokenHandler
+public class NewLineHandler : ITokenHandler
 {
     public bool CanHandle(char currentChar, ParserContext context)
     {

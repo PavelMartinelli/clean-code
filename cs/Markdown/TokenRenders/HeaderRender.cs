@@ -2,7 +2,7 @@
 
 namespace Markdown.TokenRenders;
 
-public class HeaderRender: ITokenRender
+public class HeaderRender : ITokenRender
 {
     public string Render(Token token)
     {

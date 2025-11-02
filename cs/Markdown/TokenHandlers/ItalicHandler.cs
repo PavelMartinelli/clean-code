@@ -3,7 +3,7 @@ using Markdown.Parsers;
 
 namespace Markdown.Handlers;
 
-public class ItalicHandler: ITokenHandler
+public class ItalicHandler : ITokenHandler
 {
     public bool CanHandle(char currentChar, ParserContext context)
     {

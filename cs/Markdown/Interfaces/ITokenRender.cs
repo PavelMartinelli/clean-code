@@ -1,4 +1,5 @@
 ﻿global using Markdown.Tokens;
+
 namespace Markdown.Interfaces;
 
 public interface ITokenRender

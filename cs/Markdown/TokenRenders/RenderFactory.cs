@@ -4,8 +4,9 @@ namespace Markdown.TokenRenders;
 
 public static class RenderFactory
 {
-    private static readonly Dictionary<TokenType, ITokenRender> Renders = new Dictionary<TokenType, ITokenRender>();
-    
+    private static readonly Dictionary<TokenType, ITokenRender> Renders =
+        new Dictionary<TokenType, ITokenRender>();
+
     static RenderFactory()
     {
         Renders[TokenType.Text] = new TextRender();
@@ -14,13 +15,11 @@ public static class RenderFactory
         Renders[TokenType.Header] = new HeaderRender();
         Renders[TokenType.NewLine] = new NewLineRender();
     }
-    
+
     public static ITokenRender GetRender(TokenType type)
     {
-        return Renders.TryGetValue(type, out var converter) ? converter : Renders[TokenType.Text];
+        return Renders.TryGetValue(type, out var converter)
+            ? converter
+            : Renders[TokenType.Text];
     }
 }
-
-
-
-

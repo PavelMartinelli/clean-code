@@ -4,8 +4,6 @@ using Markdown.TokenRenders;
 
 namespace Markdown.Renders;
 
-
-// Renderers/HtmlRenderer.cs
 public class HtmlRenderer : IRender
 {
     private readonly SyntaxTreeConstructor treeConstructor;
