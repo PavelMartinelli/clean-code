@@ -1,17 +1,17 @@
 ﻿using Markdown.Interfaces;
 using Markdown.Parsers;
+using Markdown.TokenHandlers;
 
 namespace Markdown.Handlers;
 
-public class ItalicHandler : ITokenHandler
+public class ItalicHandler : BoundaryTokenHandler
 {
-    public bool CanHandle(char currentChar, ParserContext context)
-    {
-        throw new NotImplementedException();
-    }
+    protected override string Delimiter => "_";
+    protected override TokenType TokenType => TokenType.Italics;
 
-    public Token Handle(char currentChar, ParserContext context)
-    {
-        throw new NotImplementedException();
-    }
+    public override bool CanHandle(char current, char next,
+        ParserContext context)
+        => current == '_' && next != '_';
+
+    protected override bool HasValidNesting(ParserContext context) => true;
 }

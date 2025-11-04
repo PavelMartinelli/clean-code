@@ -5,13 +5,15 @@ namespace Markdown.Handlers;
 
 public class NewLineHandler : ITokenHandler
 {
-    public bool CanHandle(char currentChar, ParserContext context)
-    {
-        throw new NotImplementedException();
-    }
+    public bool CanHandle(char current, char next, ParserContext context)
+        => current == '\n' && context.Stack.Count > 0 &&
+           context.Stack.Peek().Type == TokenType.Header;
 
-    public Token Handle(char currentChar, ParserContext context)
+    public void Handle(ParserContext context)
     {
-        throw new NotImplementedException();
+        MarkdownParser.AddToken(context, TokenType.Text);
+
+        context.Tokens.Add(context.Stack.Pop());
+        context.CurrentIndex++;
     }
 }

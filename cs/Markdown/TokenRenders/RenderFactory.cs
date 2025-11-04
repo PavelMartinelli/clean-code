@@ -13,7 +13,6 @@ public static class RenderFactory
         Renders[TokenType.Italics] = new ItalicRender();
         Renders[TokenType.Strong] = new StrongRender();
         Renders[TokenType.Header] = new HeaderRender();
-        Renders[TokenType.NewLine] = new NewLineRender();
     }
 
     public static ITokenRender GetRender(TokenType type)

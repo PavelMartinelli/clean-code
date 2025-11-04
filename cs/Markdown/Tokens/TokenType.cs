@@ -6,5 +6,4 @@ public enum TokenType
     Italics,
     Strong,
     Header,
-    NewLine
 }

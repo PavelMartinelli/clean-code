@@ -2,6 +2,7 @@
 using Markdown.Interfaces;
 using Markdown.Parsers;
 using Markdown.Renders;
+using Markdown.TokenHandlers;
 
 namespace Markdown;
 
@@ -19,11 +20,10 @@ public class Md
             new StrongHandler(),
             new ItalicHandler(),
             new NewLineHandler(),
-            new TextHandler()
         };
 
         parser = new MarkdownParser(handlers);
-        renderer = new HtmlRenderer(new SyntaxTreeConstructor());
+        renderer = new HtmlRenderer();
     }
 
     public string Render(string markdown)

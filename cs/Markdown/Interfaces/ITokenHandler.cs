@@ -4,6 +4,6 @@ namespace Markdown.Interfaces;
 
 public interface ITokenHandler
 {
-    bool CanHandle(char currentChar, ParserContext context);
-    Token Handle(char currentChar, ParserContext context);
+    bool CanHandle(char currentChar, char next, ParserContext context);
+    public void Handle(ParserContext context);
 }

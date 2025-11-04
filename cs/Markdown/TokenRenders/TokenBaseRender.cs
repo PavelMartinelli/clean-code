@@ -5,20 +5,14 @@ namespace Markdown.TokenRenders;
 
 public abstract class TokenBaseRender : ITokenRender
 {
-    public string Render(Token token)
+    public abstract void Render(Token token, StringBuilder result);
+    
+    protected void RenderChildren(Token token, StringBuilder result)
     {
-        throw new NotImplementedException();
-    }
-
-    protected string RenderChildren(Token token)
-    {
-        var result = new StringBuilder();
         foreach (var child in token.Children)
         {
             var render = RenderFactory.GetRender(child.Type);
-            result.Append(render.Render(child));
+            render.Render(child, result);
         }
-
-        return result.ToString();
     }
 }

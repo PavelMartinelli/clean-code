@@ -5,22 +5,23 @@ namespace Markdown.Handlers;
 
 public class EscapeHandler : ITokenHandler
 {
-    public bool CanHandle(char currentChar, ParserContext context)
+    public bool CanHandle(char current, char next, ParserContext context)
+        => current == '\\';
+
+    public void Handle(ParserContext context)
     {
-        return currentChar == '\\' && !context.IsEscaped;
-    }
+        if (context.CurrentIndex + 1 < context.MarkdownText.Length)
+        {
+            var next = context.MarkdownText[context.CurrentIndex + 1];
+            if (next is '_' or '#' or '\\')
+            {
+                context.Buffer.Append(next);
+                context.CurrentIndex += 2;
+                return;
+            }
+        }
 
-    public Token Handle(char currentChar, ParserContext context)
-    {
-        context.Position++;
-
-        if (context.Position >= context.SourceText.Length)
-            return new Token(TokenType.Text, "\\");
-
-        var escapedChar = context.SourceText[context.Position];
-
-        var escapedText = new Token(TokenType.Text, escapedChar.ToString());
-        context.Position++;
-        return escapedText;
+        context.Buffer.Append('\\');
+        context.CurrentIndex++;
     }
 }

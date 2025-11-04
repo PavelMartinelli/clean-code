@@ -1,28 +1,15 @@
 ﻿using System.Text;
+using Markdown.Interfaces;
 
 namespace Markdown.Parsers;
 
 public class ParserContext
 {
-    public string SourceText { get; set; }
-    public int Position { get; set; }
-    public StringBuilder CurrentText { get; set; }
-    public Stack<Token> TokenStack { get; set; }
-    public List<Token> ResultTokens { get; set; }
-    public bool IsEscaped { get; set; }
-
-    public ParserContext()
-    {
-        CurrentText = new StringBuilder();
-        TokenStack = new Stack<Token>();
-        ResultTokens = new List<Token>();
-    }
-
-    public void FlushCurrentText()
-    {
-        if (CurrentText.Length <= 0)
-            return;
-        ResultTokens.Add(new Token(TokenType.Text, CurrentText.ToString()));
-        CurrentText.Clear();
-    }
+    public Stack<Token> Stack { get; } = new();
+    public StringBuilder Buffer { get; } = new();
+    public List<Token> Tokens { get; } = [];
+    public List<int> IntersectedIndexes { get; } = [];
+    public string MarkdownText { get; init; } = "";
+    public int CurrentIndex { get; set; }
+    public required IParser Parser { get; init; }
 }
