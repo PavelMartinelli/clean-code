@@ -1,37 +1,32 @@
-﻿using Markdown.Handlers;
-using Markdown.Interfaces;
-using Markdown.Parsers;
-using Markdown.Renders;
+﻿using Markdown.Tags;
 using Markdown.TokenHandlers;
+using Markdown.Tokens;
 
 namespace Markdown;
 
 public class Md
 {
-    private static readonly IParser parser;
-    private static readonly IRender renderer;
+    private readonly IReadOnlyList<ITag> supportedTags;
+    private readonly MarkdownParser parser;
 
-    static Md()
+    public Md(List<ITag> supportedTags)
     {
-        var handlers = new List<ITokenHandler>
-        {
-            new EscapeHandler(),
-            new HeaderHandler(),
-            new StrongHandler(),
-            new ItalicHandler(),
-            new NewLineHandler(),
-        };
-
-        parser = new MarkdownParser(handlers);
-        renderer = new HtmlRenderer();
+        this.supportedTags = supportedTags;
+        parser = new MarkdownParser(
+        [
+            new EscapeTokenHandler(), 
+            new NewlineTokenHandler(),
+            new TagTokenHandler()
+        ],  new NestingHandler());
     }
 
-    public string Render(string markdown)
+    public string Render(string sourceText)
     {
-        if (string.IsNullOrEmpty(markdown))
-            return string.Empty;
+        var lexer = new Lexer(sourceText, supportedTags);
+        var tokens = lexer.Tokenize();
+        
+        var parsedTokens = parser.Parse(tokens);
 
-        var tokens = parser.Parse(markdown);
-        return renderer.Render(tokens);
+        return parsedTokens.ConvertToHtml();
     }
 }
