@@ -5,13 +5,13 @@ namespace Markdown;
 
 internal class Lexer
 {
-    private readonly TokenFactory tokenFactory;
-    private readonly string sourceText;
+    private readonly TokenFactory _tokenFactory;
+    private readonly string _sourceText;
 
     public Lexer(string text, IEnumerable<ITag> tags)
     {
-        this.sourceText = text;
-        this.tokenFactory = new TokenFactory(text, tags);
+        _sourceText = text;
+        _tokenFactory = new TokenFactory(text, tags);
     }
 
     public LinkedList<IToken> Tokenize()
@@ -19,12 +19,12 @@ internal class Lexer
         var tokens = new LinkedList<IToken>();
         var lastTokenIndex = 0;
         
-        for (var i = 0; i < sourceText.Length;)
+        for (var i = 0; i < _sourceText.Length;)
         {
-            if (tokenFactory.TryCreateToken(i, out var token))
+            if (_tokenFactory.TryCreateToken(i, out var token))
             {
                 if (i - lastTokenIndex > 0)
-                    tokens.AddLast(new TextToken(sourceText[lastTokenIndex..i]));
+                    tokens.AddLast(new TextToken(_sourceText[lastTokenIndex..i]));
 
                 tokens.AddLast(token);
                 lastTokenIndex = i + token.Length;
@@ -34,8 +34,8 @@ internal class Lexer
                 i++;
         }
         
-        if (sourceText.Length - lastTokenIndex > 0)
-            tokens.AddLast(new TextToken(sourceText[lastTokenIndex..]));
+        if (_sourceText.Length - lastTokenIndex > 0)
+            tokens.AddLast(new TextToken(_sourceText[lastTokenIndex..]));
         
         tokens.AddLast(new EOFToken());
         return tokens;

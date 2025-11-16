@@ -5,13 +5,13 @@ namespace Markdown;
 
 internal class MarkdownParser
 {
-    private readonly IEnumerable<ITokenHandler> handlers;
-    private readonly NestingHandler nestingHandler;
+    private readonly IEnumerable<ITokenHandler> _handlers;
+    private readonly NestingHandler _nestingHandler;
 
     public MarkdownParser(IEnumerable<ITokenHandler> handlers, NestingHandler nestingHandler)
     {
-        this.handlers = handlers;
-        this.nestingHandler = nestingHandler;
+        _handlers = handlers;
+        _nestingHandler = nestingHandler;
     }
 
     public IEnumerable<IToken> Parse(IEnumerable<IToken> tokens)
@@ -21,11 +21,11 @@ internal class MarkdownParser
         
         for (var node = tokenList.First; node != null; node = node.Next)
         {
-            foreach (var handler in handlers)
+            foreach (var handler in _handlers)
                 handler.Handle(node, stack);
         }
         
-        nestingHandler.HandleNesting(tokenList);
+        _nestingHandler.HandleNesting(tokenList);
 
         return tokenList;
     }

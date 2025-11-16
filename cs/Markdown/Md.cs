@@ -6,13 +6,13 @@ namespace Markdown;
 
 public class Md
 {
-    private readonly IReadOnlyList<ITag> supportedTags;
-    private readonly MarkdownParser parser;
+    private readonly IReadOnlyList<ITag> _supportedTags;
+    private readonly MarkdownParser _parser;
 
     public Md(List<ITag> supportedTags)
     {
-        this.supportedTags = supportedTags;
-        parser = new MarkdownParser(
+        _supportedTags = supportedTags;
+        _parser = new MarkdownParser(
         [
             new EscapeTokenHandler(), 
             new NewlineTokenHandler(),
@@ -22,10 +22,10 @@ public class Md
 
     public string Render(string sourceText)
     {
-        var lexer = new Lexer(sourceText, supportedTags);
+        var lexer = new Lexer(sourceText, _supportedTags);
         var tokens = lexer.Tokenize();
         
-        var parsedTokens = parser.Parse(tokens);
+        var parsedTokens = _parser.Parse(tokens);
 
         return parsedTokens.ConvertToHtml();
     }

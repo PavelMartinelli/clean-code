@@ -5,21 +5,21 @@ namespace Markdown;
 
 internal class TokenFactory
 {
-    private readonly List<(string mdTag, Func<int, string, IToken> factory)> tokenTemplates;
-    private readonly string sourceText;
+    private readonly List<(string mdTag, Func<int, string, IToken> factory)> _tokenTemplates;
+    private readonly string _sourceText;
 
     public TokenFactory(string sourceText, IEnumerable<ITag> tags)
     {
-        this.sourceText = sourceText;
-        tokenTemplates = new List<(string, Func<int, string, IToken>)>();
+        _sourceText = sourceText;
+        _tokenTemplates = new List<(string, Func<int, string, IToken>)>();
         
-        tokenTemplates.Add(("\\", (pos, text) => new EscapeToken()));
-        tokenTemplates.Add(("\n", (pos, text) => new NewlineToken()));
+        _tokenTemplates.Add(("\\", (pos, text) => new EscapeToken()));
+        _tokenTemplates.Add(("\n", (pos, text) => new NewlineToken()));
         
         var sortedTags = tags.OrderByDescending(tag => tag.MdTag.Length).ThenBy(tag => tag.MdTag);
         foreach (var tag in sortedTags)
         {
-            tokenTemplates.Add((tag.MdTag, (pos, text) => 
+            _tokenTemplates.Add((tag.MdTag, (pos, text) => 
             {
                 var leftChar = text.ElementAtOrDefault(pos - 1);
                 var rightChar = text.ElementAtOrDefault(pos + tag.MdTag.Length);
@@ -32,13 +32,13 @@ internal class TokenFactory
     {
         token = null;
         
-        foreach (var (mdTag, factory) in tokenTemplates)
+        foreach (var (mdTag, factory) in _tokenTemplates)
         {
-            if (position + mdTag.Length > sourceText.Length ||
-                sourceText.Substring(position, mdTag.Length) != mdTag) 
+            if (position + mdTag.Length > _sourceText.Length ||
+                _sourceText.Substring(position, mdTag.Length) != mdTag) 
                 continue;
             
-            token = factory(position, sourceText);
+            token = factory(position, _sourceText);
             return true;
         }
 
