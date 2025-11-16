@@ -9,7 +9,7 @@ internal static class TokenExtensions
 
     public static bool HasWhiteSpaceBetween(this LinkedListNode<IToken> token, TagToken pairTag)
     {
-        for (var current = token.Next; current!.Value != pairTag; current = current.Next)
+        for (var current = token.Next; current.Value != pairTag; current = current.Next)
             if (current.Value.Value?.Contains(' ') == true)
                 return true;
 

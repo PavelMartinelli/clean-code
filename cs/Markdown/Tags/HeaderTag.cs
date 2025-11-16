@@ -1,18 +1,11 @@
 ﻿namespace Markdown.Tags;
 
-public class HeaderTag : ITag
+public class HeaderTag : BlockTag
 {
-    public string MdTag => "# ";
-    public string HtmlOpenTag => "<h1>";
-    public string HtmlCloseTag => "</h1>";
+    public override string MdTag => "# ";
+    public override string HtmlOpenTag => "<h1>";
+    public override string HtmlCloseTag => "</h1>";
+    public override string HtmlBlockOpenTag => "";
+    public override string HtmlBlockCloseTag => "";
 
-    public bool CanBeOpened(char left, char right)
-    {
-        return left is '\0' or '\n';
-    }
-    
-    public bool CanBeClosed(char left, char right)
-    {
-        return true;
-    }
 }

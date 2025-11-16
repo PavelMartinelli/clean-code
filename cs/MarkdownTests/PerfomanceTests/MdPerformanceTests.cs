@@ -21,12 +21,10 @@ public class MdPerformanceTests
     [Test]
     public void Render_PerformanceTest_ShouldHaveSubQuadraticComplexity()
     {
-        var pattern =
-            "# Заголовок с _курсивным_ текстом и __жирным__ выделением\n";
-        pattern +=
-            "А это второй абзац с разными _символами_ разметки и \\_экранированием\\_\n";
-        pattern +=
-            "И еще один __абзац__ для _тестирования_ производительности # не заголовок";
+        var pattern = "# Заголовок с _курсивным_ текстом и __жирным__ выделением\n";
+        pattern += "А это второй абзац с разными _символами_ разметки и \\_экранированием\\_\n";
+        pattern += "И еще один __абзац__ для _тестирования_ производительности # не заголовок";
+        pattern += "* И еще блок из * Списка 1 \n * A и \n * Списка 2\n * Б \n ";
 
         var smallText = string.Join("", Enumerable.Repeat(pattern, 100));
         var largeText = string.Join("", Enumerable.Repeat(pattern, 1000));
