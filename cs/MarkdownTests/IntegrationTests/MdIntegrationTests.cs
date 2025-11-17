@@ -5,7 +5,7 @@ using Markdown.Tags;
 namespace MarkdownTests.InteractionTests;
 
 [TestFixture]
-public class TagInteractionTests
+public class MdTagIntegrationTests
 {
     private Md mdRenderer;
 
